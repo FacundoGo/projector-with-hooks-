@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import Projects from './components/Projects';
+import ProjectDetails from './components/ProjectDetails';
 import Navbar from './components/Navbar';
 import { Route } from 'react-router-dom';
 
@@ -13,6 +13,11 @@ function App() {
         exact
         path='/projects'
         component={Projects}
+      />
+      <Route
+        exact
+        path='/projects/:id'
+        component={ProjectDetails}
       />
     </div>
   );
