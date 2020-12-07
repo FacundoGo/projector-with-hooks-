@@ -15,12 +15,11 @@ router.get('/', (req, res, next) => {
 });
 
 // get a specfic project
+// to check if id is a valid mongo object id: mongoose.Types.ObjectId.isValid(_id)
 router.get('/:id', (req, res, next) => {
   Project.findById(req.params.id)
     .then(project => {
-      console.log('project: ', project);
       if (!project) {
-        console.log(404);
         res.status(404).json(project);
       } else {
         res.status(200).json(project);

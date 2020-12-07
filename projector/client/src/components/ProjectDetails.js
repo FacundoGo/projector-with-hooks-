@@ -25,7 +25,14 @@ export default class ProjectDetails extends Component {
           description: response.data.description
         })
       })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err.response)
+        if (err.response.status === 404) {
+          this.setState({
+            error: 'Sorry - Project Not found 🤷‍♀️ 🤷‍♂️'
+          })
+        }
+      })
   }
 
   componentDidMount = () => {
@@ -75,6 +82,7 @@ export default class ProjectDetails extends Component {
   }
 
   render() {
+    if (this.state.error) return <h1>{this.state.error}</h1>
     if (!this.state.project) return <h1>Loading...</h1>
     return (
       <div>
