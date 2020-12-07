@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Project.findById(req.params.id)
     .then(project => {
-      console.log(project);
+      console.log('project: ', project);
       if (!project) {
         console.log(404);
         res.status(404).json(project);
