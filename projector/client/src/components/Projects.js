@@ -1,36 +1,45 @@
-import React, { Component } from 'react'
-import axios from 'axios';
-import ProjectList from './ProjectList';
-import AddProject from './AddProject';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import ProjectList from "./ProjectList";
+import AddProject from "./AddProject";
 
-export default class Projects extends Component {
+const Projects = (props) => {
+	const [projects, setProjects] = useState([]);
+	// const greeting = useContext(DataContext);
+	// state = {
+	//   projects: []
+	// }
 
-  state = {
-    projects: []
-  }
-  getData = () => {
-    // get the current list of projects from the server
-    axios.get('/api/projects')
-      .then(response => {
-        console.log(response);
-        // put them into the state
-        this.setState({
-          projects: response.data
-        })
-      })
-      .catch(err => console.log(err))
-  }
+	// console.log("this is the context", greeting);
 
-  componentDidMount() {
-    this.getData();
-  }
+	const getData = () => {
+		// get the current list of projects from the server
+		axios
+			.get("/api/projects")
+			.then((response) => {
+				console.log(response);
 
-  render() {
-    return (
-      <div className='projects-container'>
-        <AddProject getData={this.getData} />
-        <ProjectList projects={this.state.projects} />
-      </div>
-    )
-  }
-}
+				setProjects(response.data);
+				// this.setState({
+				//   projects: response.data
+				// })
+			})
+			.catch((err) => console.log(err));
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	// componentDidMount() {
+	//   this.getData();
+	// }
+
+	return (
+		<div className="projects-container">
+			<AddProject getData={getData} />
+			<ProjectList projects={projects} />
+		</div>
+	);
+};
+export default Projects;
